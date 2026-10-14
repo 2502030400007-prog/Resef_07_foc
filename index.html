@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Simple AI</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f0f0f0;
+            text-align: center;
+        }
+
+        .chat {
+            width: 350px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #messages {
+            height: 250px;
+            overflow-y: auto;
+            text-align: left;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 70%;
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat">
+    <h2>🤖 My Simple AI</h2>
+
+    <div id="messages">
+        <p><b>AI:</b> Hello! How can I help you?</p>
+    </div>
+
+    <input type="text" id="userInput"
+           placeholder="Ask me something..."
+           onkeydown="if(event.key==='Enter') sendMessage()">
+
+    <button onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+function sendMessage() {
+    let input = document.getElementById("userInput");
+    let message = input.value.trim().toLowerCase();
+    let box = document.getElementById("messages");
+
+    if (message === "") return;
+
+    box.innerHTML += "<p><b>You:</b> " +
+        escapeHTML(input.value) + "</p>";
+
+    let reply = "Sorry, I don't understand. Try asking something else.";
+
+    if (message.includes("hello") || message.includes("hi")) {
+        reply = "Hello! Nice to meet you.";
+    } else if (message.includes("your name")) {
+        reply = "I am your Simple AI Assistant.";
+    } else if (message.includes("how are you")) {
+        reply = "I am fine! How can I help you?";
+    } else if (message.includes("time")) {
+        reply = "The current time is " +
+            new Date().toLocaleTimeString();
+    } else if (message.includes("date")) {
+        reply = "Today's date is " +
+            new Date().toLocaleDateString();
+    } else if (message.includes("html")) {
+        reply = "HTML is used to create web pages.";
+    } else if (message.includes("ai")) {
+        reply = "AI means Artificial Intelligence.";
+    } else if (message.includes("bye")) {
+        reply = "Goodbye! Have a nice day.";
+    }
+
+    box.innerHTML += "<p><b>AI:</b> " +
+        escapeHTML(reply) + "</p>";
+
+    input.value = "";
+    box.scrollTop = box.scrollHeight;
+}
+
+function escapeHTML(text) {
+    return text.replace(/[&<>"']/g, function(char) {
+        return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }[char];
+    });
+}
+</script>
+
+</body>
+</html>
